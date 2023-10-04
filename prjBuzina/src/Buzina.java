@@ -1,20 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
- * @author 0031432312025
+ * @author Dimas
  */
 public class Buzina {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    private boolean estado;//false - desligada  true - ligada
+    
+    //método construtor
+    //tem o mesmo nome da classe
+    //fornece um estado inicial 
+    //para o objeto
+    public Buzina(){
+        estado = false; //estado de desligada
     }
     
+    public void ligar(){
+        estado = true; //estado de ligada
+    }
+    
+    public void desligar(){
+        estado = false; //estado de desligada
+    }
+    
+    public void acionar(){
+        if (estado == true){
+            System.out.println("\n\tFonFon...FonFon...FonFon...FonFon...FonFon...\n");
+        }    
+    }
+    
+    public boolean obterEstado(){
+        return(estado);
+    }
 }
