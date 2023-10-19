@@ -74,7 +74,6 @@ public class GuiProduto extends javax.swing.JFrame {
         });
 
         btnExcluir.setText("Excluir");
-        btnExcluir.setEnabled(false);
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
@@ -229,7 +228,12 @@ public class GuiProduto extends javax.swing.JFrame {
         
         PreparedStatement ps = null;
         try{
-            ps = connection.prepareStatement("INSERT INTO Produto_TAP VALUES (?,?,?,?);");
+            ps = connection.prepareStatement("INSERT INTO Produto_TAP VALUES (?,?,?,?)");
+            ps.setInt(1, produto.getCodigo());
+            ps.setString(2, produto.getDescricao());
+            ps.setInt(3, produto.getQtde());
+            ps.setDouble(4, produto.getPrecoUnit());
+            ps.execute();
         }catch(SQLException ex){
             System.out.println(ex.toString());
         }
@@ -254,6 +258,15 @@ public class GuiProduto extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (JOptionPane.showConfirmDialog(null, "Confirma Exclusão?") == 0) {
+            
+            PreparedStatement ps = null;
+            try{
+                ps = connection.prepareStatement("DELETE FROM Produto_TAP WHERE Codigo = ?");
+                ps.setInt(1, produto.getCodigo());
+                ps.execute();
+            }catch(SQLException ex){
+                System.out.println(ex.toString());
+            }
             
             //Ajusta a gui para uma nova operação de consulta
             txtCodigo.setText("");
