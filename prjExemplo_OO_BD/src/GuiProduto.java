@@ -3,6 +3,8 @@
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /* 
@@ -57,7 +59,6 @@ public class GuiProduto extends javax.swing.JFrame {
         });
 
         btnIncluir.setText("Incluir");
-        btnIncluir.setEnabled(false);
         btnIncluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIncluirActionPerformed(evt);
@@ -226,6 +227,12 @@ public class GuiProduto extends javax.swing.JFrame {
 
         //Enviar instrução SQL de inclusão para o banco
         
+        PreparedStatement ps = null;
+        try{
+            ps = connection.prepareStatement("INSERT INTO Produto_TAP VALUES (?,?,?,?);");
+        }catch(SQLException ex){
+            System.out.println(ex.toString());
+        }
         
         //Ajusta a gui para uma nova operação de consulta
         txtCodigo.setText("");
