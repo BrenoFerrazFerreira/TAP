@@ -269,6 +269,14 @@ public class GuiProduto extends javax.swing.JFrame {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (JOptionPane.showConfirmDialog(null, "Confirma Exclusão?") == 0) {
             //Enviar instrução SQL de exclusão para o banco
+            PreparedStatement ps = null;
+            try {
+                ps = connection.prepareStatement("DELETE FROM Produto_TAP WHERE Codigo = ?");
+                ps.setInt(1, produto.getCodigo());
+                ps.execute();
+            } catch (SQLException ex) {
+                System.out.println(ex.toString());
+            }
 
             //Ajusta a gui para uma nova operação de consulta
             txtCodigo.setText("");

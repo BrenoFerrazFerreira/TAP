@@ -12,7 +12,7 @@ public class Cliente {
         cpf = c;
         nome = n;
         limCred = lc;
-        limCredDisp = limCred;
+        //limCredDisp = limCred;
     }
 
     public String getCpf() {
