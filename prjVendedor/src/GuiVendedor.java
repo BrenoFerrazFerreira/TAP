@@ -1,5 +1,6 @@
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,6 +49,11 @@ public class GuiVendedor extends javax.swing.JFrame {
         txtTaxaComissao = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         txtNome.setEnabled(false);
 
@@ -244,7 +250,7 @@ public class GuiVendedor extends javax.swing.JFrame {
         txtCpf.setEnabled(true);
         txtNome.setEnabled(false);
         txtSalarioBase.setEnabled(false);
-        txtTaxaComissao.setEnabled(true);
+        txtTaxaComissao.setEnabled(false);
         txtCpf.requestFocus();
 
         btnConsultar.setEnabled(true);
@@ -295,7 +301,7 @@ public class GuiVendedor extends javax.swing.JFrame {
             //Enviar instrução SQL de exclusão para o banco
             PreparedStatement ps = null;
             try {
-                ps = connection.prepareStatement("DELETE FROM Cliente_TAP WHERE CPF = ?");
+                ps = connection.prepareStatement("DELETE FROM tblVendedor WHERE CPF = ?");
                 ps.setString(1, vendedor.getCpf());
                 ps.execute();
             } catch (SQLException ex) {
@@ -323,6 +329,23 @@ public class GuiVendedor extends javax.swing.JFrame {
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+         try{
+             //Caregar o driver de conexão com o banco de dados
+             Class.forName("oracle.jdbc.driver.OracleDriver");
+        
+             //Estabelece a conexão com o banco de dados Oracle  
+                                                                          
+             connection = DriverManager.getConnection("jdbc:oracle:thin:@192.168.1.6:1521:xe",
+                                                       "BD2312025", //login
+                                                       "BD2312025");//senha
+             System.out.println("Conexão OK");
+        }catch(Exception ex){
+            System.out.println("Falha na conexão");
+            System.out.println(ex.toString() + ex.getMessage());
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
