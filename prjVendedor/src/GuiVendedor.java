@@ -50,6 +50,9 @@ public class GuiVendedor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -227,7 +230,8 @@ public class GuiVendedor extends javax.swing.JFrame {
         //Faz a instanciação de um objeto da classe Produto
         vendedor = new Vendedor(txtCpf.getText(),
             txtNome.getText(),
-            Double.parseDouble(txtSalarioBase.getText()));
+            Double.parseDouble(txtTaxaComissao.getText()));
+        vendedor.setSalarioBase(Double.parseDouble(txtSalarioBase.getText()));
 
         //Enviar instrução SQL de inclusão para o banco
         PreparedStatement ps  = null;
@@ -263,7 +267,7 @@ public class GuiVendedor extends javax.swing.JFrame {
         if (JOptionPane.showConfirmDialog(null, "Confirma Alteração?") == 0) {
             vendedor.setNome(txtNome.getText());
             vendedor.setSalarioBase(Double.parseDouble(txtSalarioBase.getText()));
-            vendedor.setTaxaComissao(Double.parseDouble(txtSalarioBase.getText()));
+            vendedor.setTaxaComissao(Double.parseDouble(txtTaxaComissao.getText()));
 
             PreparedStatement ps = null;
             try {
@@ -346,6 +350,14 @@ public class GuiVendedor extends javax.swing.JFrame {
             System.out.println(ex.toString() + ex.getMessage());
         }
     }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            connection.close();
+        }catch(Exception ex){
+            System.out.println(ex.toString() + ex.getMessage());            
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
